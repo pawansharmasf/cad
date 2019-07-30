@@ -1,0 +1,4 @@
+---
+# tasks file for cadent
+- import_tasks: install.yml
+- import_tasks: useradd.yml

@@ -1,0 +1,5 @@
+---
+# defaults file for cadent
+
+sshdconfig: /etc/ssh/sshd_config
+password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"

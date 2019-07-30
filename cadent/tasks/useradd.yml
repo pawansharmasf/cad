@@ -1,0 +1,37 @@
+---
+- name: Create a user with hashed password
+  user:
+    name: kulwinder.basra
+    comment: "Cadent"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+
+- name: Create a user with hashed password
+  user:
+    name: michal.plandor
+    comment: "Cadent"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+
+
+- name: Create a user with hashed password
+  user:
+    name: sachin.tyagi
+    comment: "Cadent"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+
+- name: Create a user with hashed password
+  user:
+    name: vinay.paul
+    comment: "Cadent"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+
+- name: Create a user with hashed password
+  user:
+    name: aditi.pal
+    comment: "Cadent"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+
+- name: Expire password
+  command: chage -d 0 kulwinder.basra
+
+- name: Expire password
+  command: chage -d 0 michal.plandor
