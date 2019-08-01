@@ -1,0 +1,22 @@
+---
+
+
+# Enable Root login
+- name: set PermitRootLogin yes
+  lineinfile: dest={{ sshdconfig }} insertafter="^UsePAM yes" line="PermitRootLogin yes" state=present
+  tags:
+  - config
+
+# Adding sudoers entry 
+- name: Add usrs in sudoers
+  lineinfile: dest={{ sudoers }} insertafter="^#includedir /etc/sudoers.d" line={{ item }} state=present
+  with_items:
+  - kulwinder.basra ALL=(ALL) ALL
+  - vinay.paul ALL=(ALL) ALL
+  - michal.plandor ALL=(ALL) ALL
+  - aditi.pal ALL=(ALL) ALL
+  - sachin.tyagi ALL=(ALL) ALL
+  - rohit.khanna ALL=(ALL) ALL
+  - bkp_usr ALL=(ALL) ALL 
+  tags:
+  - config 

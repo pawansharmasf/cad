@@ -1,0 +1,92 @@
+---
+# Common group add
+- name: group add sapinst
+  group:
+    name: sapinst
+    gid: 6001
+    state: present
+  tags: 
+  - user
+# Group add sapsys
+- name: group add sapsys
+  group:
+    name: sapsys
+    gid: 6002
+    state: present
+  tags:
+  - user
+
+# Will Create users with Default password
+- name: sapadm User creation SAP System Administrator
+  user: 
+    name: sapadm  
+    uid: 6100
+    groups: sapsys
+    shell: /bin/false
+    comment: "SAP System Administrator"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+  tags:
+  - user
+
+
+# daadm User Creation
+- name: daaadm User creation SAP System Administrator
+  user:
+    name: daaadm
+    uid: 6101
+    groups: sapsys,sapinst
+    shell: /bin/csh
+    comment: "SAP System Administrator"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+  tags:
+  - user
+
+# bkp_usr User creation
+- name: bkp user creation 
+  user:
+    name: bkp_usr
+    uid: 6102
+    shell: /bin/bash
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+  tags: user
+
+# Password policy for for sapadm, daaadm & bkp_usr
+- name: Login Policy Apply
+  command: chage -I -1 -m 0 -M 99999 -E -1 {{ item }}
+  with_items:
+    - sapadm
+    - daaadm
+    - bkp_usr
+  tags: 
+  - user
+
+# Will Create users with Default password
+- name: New Build server User Creation
+  user: 
+    name: "{{ item }}" 
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+    shell: /bin/bash
+  with_items:
+  - kulwinder.basra
+  - michal.plandor
+  - sachin.tyagi
+  - vinay.paul
+  - aditi.pal
+  - rohit.khanna
+  tags: 
+  - user
+
+# Will promp users to Change their password at first login
+- name: Login Policy Apply
+  command: chage -d 0 {{ item }}
+  with_items:
+  - kulwinder.basra
+  - michal.plandor
+  - sachin.tyagi
+  - aditi.pal
+  - vinay.paul
+  - rohit.khanna
+  tags: 
+  - user
+
+

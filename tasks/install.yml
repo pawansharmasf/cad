@@ -1,0 +1,29 @@
+---
+- name: Install dependencies
+  zypper: name={{ item }} state=present  
+  with_items:
+    - xclock
+    - xterm*
+    - xorg*
+    - xauth
+    - sapconf
+  tags:
+  - package 
+- name: Create Directory for RPM
+  file: path=/sapconf state=directory mode=777
+  tags:
+  - package
+
+- name: copy RPM
+  copy: src=files/sapconf-4.1.12-40.47.1.noarch.rpm dest=/sapconf/sapconf-4.1.12-40.47.1.noarch.rpm
+  tags:
+  - package
+
+# Will Update the RPM software on server but will fail if exiting version is higher
+#- name: Update RPM
+#  shell: rpm -U /sapconf/sapconf-4.1.12-40.47.1.noarch.rpm 
+#  args:
+#    warn: no
+#  tags:
+#    - package
+
