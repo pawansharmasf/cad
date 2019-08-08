@@ -1,4 +1,5 @@
 ---
+
 # Common group add
 - name: group add sapinst
   group:
@@ -7,6 +8,7 @@
     state: present
   tags: 
   - user
+
 # Group add sapsys
 - name: group add sapsys
   group:
@@ -16,6 +18,7 @@
   tags:
   - user
 
+#######################################################
 # Will Create users with Default password
 - name: sapadm User creation SAP System Administrator
   user: 
@@ -24,7 +27,7 @@
     groups: sapsys
     shell: /bin/false
     comment: "SAP System Administrator"
-    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+    password: "$6$mysecretsalt$9iCiGFBDZSzeM.CsWNr8vZBf8HgYleQiTOVdHSfoURw3xUJkKBkPUiIOBwFgQ6DekGCT4Njv/IhLH2i9yGeoP."
   tags:
   - user
 
@@ -37,12 +40,12 @@
     groups: sapsys,sapinst
     shell: /bin/csh
     comment: "SAP System Administrator"
-    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+    password: "$6$mysecretsalt$9iCiGFBDZSzeM.CsWNr8vZBf8HgYleQiTOVdHSfoURw3xUJkKBkPUiIOBwFgQ6DekGCT4Njv/IhLH2i9yGeoP."
   tags:
   - user
 
 # bkp_usr User creation
-- name: bkp user creation 
+- name: bkp_usr creation 
   user:
     name: bkp_usr
     uid: 6102
@@ -50,18 +53,20 @@
     password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
   tags: user
 
+##############################################################3
 # Password policy for for sapadm, daaadm & bkp_usr
-- name: Login Policy Apply
-  command: chage -I -1 -m 0 -M 99999 -E -1 {{ item }}
-  with_items:
-    - sapadm
-    - daaadm
-    - bkp_usr
-  tags: 
-  - user
+#- name: Login Policy Apply
+#  command: chage -I -1 -m 0 -M 99999 -E -1 {{ item }}
+#  with_items:
+#    - sapadm
+#    - daaadm
+#    - bkp_usr
+#  tags: 
+#  - user
+
 
 # Will Create users with Default password
-- name: New Build server User Creation
+- name: New System User Creation
   user: 
     name: "{{ item }}" 
     password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
@@ -76,17 +81,52 @@
   tags: 
   - user
 
-# Will promp users to Change their password at first login
-- name: Login Policy Apply
-  command: chage -d 0 {{ item }}
-  with_items:
-  - kulwinder.basra
-  - michal.plandor
-  - sachin.tyagi
-  - aditi.pal
-  - vinay.paul
-  - rohit.khanna
-  tags: 
+# Root password change
+- name: passwd update root
+  user:
+    name: root
+    update_password: always
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg29E0"
+  tags:
   - user
 
+# Password policy for all users
+- name: Passwd will not expire policy
+  command: chage -I -1 -m 0 -M 99999 -E -1 {{ item }}
+  with_items:
+    - sapadm
+    - daaadm
+    - bkp_usr
+    - kulwinder.basra
+    - michal.plandor
+    - sachin.tyagi
+    - vinay.paul
+    - aditi.pal
+    - rohit.khanna
+    - root
+  tags:
+  - user
 
+# Will promp users to Change their password at first login
+#- name: Login Policy Apply
+#  command: chage -d 0 {{ item }}
+#  with_items:
+#  - kulwinder.basra
+#  - michal.plandor
+#  - sachin.tyagi
+#  - aditi.pal
+#  - vinay.paul
+#  - rohit.khanna
+#  tags: 
+#  - user
+
+
+# password prompt
+- name: passwd prompt update
+  user:
+    name: username
+    prompt: "What is your username?"
+    password: "$6$mysecretsalt$1SMjoVXjYf.3sJRzf9AZCuc3a1WUxlDCmdJwC613.SUD4DOf40fB4H6x6ythUtz2omQrzuYbs8G00NHmOg
+29E0"
+  tags:
+  - user

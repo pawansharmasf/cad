@@ -3,7 +3,8 @@
 
 # Enable Root login
 - name: set PermitRootLogin yes
-  lineinfile: dest={{ sshdconfig }} insertafter="^UsePAM yes" line="PermitRootLogin yes" state=present
+#  lineinfile: dest={{ sshdconfig }} insertafter="^UsePAM yes" line="PermitRootLogin yes" state=present
+  copy: src=files/sshd_config dest=/etc/ssh/sshd_config
   tags:
   - config
 
@@ -18,5 +19,7 @@
   - sachin.tyagi ALL=(ALL) ALL
   - rohit.khanna ALL=(ALL) ALL
   - bkp_usr ALL=(ALL) ALL 
+  - sapadm ALL=(ALL) ALL
+  - daaadm ALL=(ALL) ALL
   tags:
   - config 
